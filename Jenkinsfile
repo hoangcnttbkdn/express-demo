@@ -11,6 +11,7 @@ pipeline {
                 withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
                     sh 'docker build -t hoangsndxqn/express-demo:v1 .'
                     sh 'docker push hoangsndxqn/express-demo:v1'
+                    sh 'docker image rm hoangsndxqn/express-demo:v1'
                 }   
             }
         }
