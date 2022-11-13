@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git branch: 'dev', credentialsId: 'gittoken', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
+                git branch: 'master', credentialsId: 'gittoken', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
             }
         }
         stage('Docker build and push') {
