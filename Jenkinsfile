@@ -7,7 +7,9 @@ pipeline {
             }
         }
         stage('unit test') {
+            steps {
 
+            }
         }
         stage('Docker build and push') {
             steps {
@@ -19,9 +21,12 @@ pipeline {
             }
         }
         stage('SSH server and deploy') {
-            sshagent(['ssh-key-totserver']) {
-                sh 'ssh -o StricHostKeyChecking=no -l root 103.197.184.169 touch a.txt'
+            steps{
+                sshagent(['ssh-key-totserver']) {
+                    sh 'ssh -o StricHostKeyChecking=no -l root 103.197.184.169 touch a.txt'
+                }
             }
+            
         }
     }
     post {
