@@ -4,7 +4,7 @@ const port = 3000
 
 app.get('/', (req, res) => {
   var a = 1
-  res.send('picture finder')
+  res.send('Du an picture finder KMS')
 })
 
 app.listen(port, () => {
