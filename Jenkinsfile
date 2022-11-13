@@ -8,7 +8,7 @@ pipeline {
         }
         stage('unit test') {
             steps {
-                echo runtest
+                sh 'echo runtest'
             }
         }
         stage('Docker build and push') {
