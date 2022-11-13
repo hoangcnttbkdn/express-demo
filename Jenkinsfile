@@ -25,9 +25,10 @@ pipeline {
                 // sshagent(['ssh-key-totserver']) {
                 //     sh 'ssh -o StricHostKeyChecking=no -l root 103.197.184.169 -p 4433 touch a.txt'
                 // }
-                withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key-totserver', keyFileVariable: 'keyfile')]) {
-                    sh "ssh root@103.197.184.169 -p 4433 'touch a.txt'"
-                }
+                // withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key-totserver', keyFileVariable: 'keyfile')]) {
+                //     sh "ssh root@103.197.184.169 -p 4433 'touch a.txt'"
+                // }
+                sh "ssh -i /var/jenkins_home/.ssh/id_rsa root@103.197.184.169 -p 4433 'touch a.txt'"
             }
             
         }
