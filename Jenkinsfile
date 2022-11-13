@@ -22,8 +22,11 @@ pipeline {
         }
         stage('SSH server and deploy') {
             steps{
-                sshagent(['ssh-key-totserver']) {
-                    sh 'ssh -o StricHostKeyChecking=no -l root 103.197.184.169 touch a.txt'
+                // sshagent(['ssh-key-totserver']) {
+                //     sh 'ssh -o StricHostKeyChecking=no -l root 103.197.184.169 -p 4433 touch a.txt'
+                // }
+                withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key-totserver', keyFileVariable: 'keyfile')]) {
+                    sh "ssh -i $keyfile root@103.197.184.169 -p 4433 'touch a.txt'"
                 }
             }
             
