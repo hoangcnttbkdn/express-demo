@@ -6,6 +6,9 @@ pipeline {
                 git branch: 'master', credentialsId: 'gittoken', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
             }
         }
+        stage('unit test') {
+
+        }
         stage('Docker build and push') {
             steps {
                 withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
@@ -13,6 +16,11 @@ pipeline {
                     sh 'docker push hoangsndxqn/express-demo:v1'
                     sh 'docker image rm hoangsndxqn/express-demo:v1'
                 }   
+            }
+        }
+        stage('SSH server and deploy') {
+            sshagent(['ssh-key-totserver']) {
+                sh 'ssh -o StricHostKeyChecking=no -l root 103.197.184.169 touch a.txt'
             }
         }
     }
