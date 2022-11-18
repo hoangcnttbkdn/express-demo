@@ -17,7 +17,7 @@ pipeline {
                     sh 'docker build -t hoangsndxqn/express-demo:v1 .'
                     sh 'docker push hoangsndxqn/express-demo:v1'
                     sh 'docker image rm hoangsndxqn/express-demo:v1'
-                    sh 'docker rmi $(docker images -f "dangling=true" -q)'
+                    // sh 'docker rmi $(docker images -f "dangling=true" -q)'
                 }   
             }
         }
@@ -30,7 +30,7 @@ pipeline {
                 //     sh "ssh root@103.197.184.169 -p 4433 'touch a.txt'"
                 // }
                 // sh "ssh -i /var/jenkins_home/.ssh/id_rsa root@103.197.184.169 -p 4433 './deploy.sh'"
-                sh 'echo deploy ok'
+                sh 'echo deploy'
             }
             
         }
