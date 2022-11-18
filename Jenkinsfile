@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git branch: 'dev', credentialsId: 'gittoken', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
+                git branch: 'dev', credentialsId: 'git-hub', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
             }
         }
         stage('unit test') {
@@ -17,6 +17,7 @@ pipeline {
                     sh 'docker build -t hoangsndxqn/express-demo:v1 .'
                     sh 'docker push hoangsndxqn/express-demo:v1'
                     sh 'docker image rm hoangsndxqn/express-demo:v1'
+                    sh 'docker rmi $(docker images -f "dangling=true" -q)'
                 }   
             }
         }
@@ -28,7 +29,8 @@ pipeline {
                 // withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key-totserver', keyFileVariable: 'keyfile')]) {
                 //     sh "ssh root@103.197.184.169 -p 4433 'touch a.txt'"
                 // }
-                sh "ssh -i /var/jenkins_home/.ssh/id_rsa root@103.197.184.169 -p 4433 './deploy.sh'"
+                // sh "ssh -i /var/jenkins_home/.ssh/id_rsa root@103.197.184.169 -p 4433 './deploy.sh'"
+                sh 'echo deploy ok'
             }
             
         }
