@@ -1,16 +1,16 @@
 pipeline {
     agent any
     stages {
-        stage('Clone') {
+        stage('Fetch code') {
             steps {
-                git branch: 'dev', credentialsId: 'git-hub', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
+                git credentialsId: 'git-hub', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
             }
         }
-        stage('unit test') {
-            steps {
-                sh 'echo runtest'
-            }
-        }
+        // stage('unit test') {
+        //     steps {
+        //         sh 'echo runtest'
+        //     }
+        // }
         stage('Docker build and push') {
             steps {
                 withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
@@ -30,7 +30,7 @@ pipeline {
                 //     sh "ssh root@103.197.184.169 -p 4433 'touch a.txt'"
                 // }
                 // sh "ssh -i /var/jenkins_home/.ssh/id_rsa root@103.197.184.169 -p 4433 './deploy.sh'"
-                sh 'echo deploy'
+                sh 'echo develop neeee'
             }
             
         }
