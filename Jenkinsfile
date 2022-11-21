@@ -3,8 +3,7 @@ pipeline {
     stages {
         stage('Fetch code') {
             steps {
-                git credentialsId: 'git-hub', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
-            }
+                git branch: 'dev', credentialsId: 'git-hub', url: 'https://github.com/hoangcnttbkdn/express-demo.git'            }
         }
         // stage('unit test') {
         //     steps {
