@@ -1,10 +1,10 @@
-FROM node:16.18.0
+FROM node:16.18.0-alpine
 
 WORKDIR /JenkinsGithub
 
 COPY ["package.json", "package-lock.json*", "./"]
 
-COPY ./node_modules ./node_modules
+RUN npm install
 
 COPY ./*.js ./
 
