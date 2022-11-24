@@ -9,7 +9,7 @@ pipeline {
                     echo env.BRANCH_NAME
                 }
                 // sh 'echo $env.BRANCH_NAME'
-                sh 'echo env.BRANCH_NAME'
+                sh 'echo $env.BRANCH_NAME'
                 git branch: env.BRANCH_NAME, credentialsId: 'gittoken', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
             }
         }
