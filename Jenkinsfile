@@ -21,7 +21,9 @@ pipeline {
         stage('Docker build and push') {
             environment {
                 DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
-                sh 'echo ${DOCKER_TAG}'
+            }
+            script {
+                echo DOCKER_TAG
             }
             steps {
                 withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
