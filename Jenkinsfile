@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_IMAGE = "hoangsndxqn/express-demo"
+    }
     stages {
         // stage('Clone') {
         //     steps {
@@ -27,17 +30,20 @@ pipeline {
                 script {
                     echo DOCKER_TAG
                 }
+                sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} . "
+                sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest"
+                sh "docker image ls | grep ${DOCKER_IMAGE}"
                 withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
-                    sh 'docker build -t hoangsndxqn/express-demo:v1 .'
-                    sh 'docker push hoangsndxqn/express-demo:v1'
-                    // sh 'docker image rm hoangsndxqn/express-demo:v1'
-                }   
+                    sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                    sh "docker push ${DOCKER_IMAGE}:latest"
+                }
+                sh "docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                sh "docker image rm ${DOCKER_IMAGE}:latest"
             }
         }
         stage('SSH server and deploy') {
             steps{
                 sh "ssh -i /var/jenkins_home/.ssh/id_svdev root@128.199.246.141 './deploy.sh'"
-                // sh 'echo deploy'
             }
             
         }
