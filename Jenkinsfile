@@ -22,7 +22,7 @@ pipeline {
         }
         stage('SSH server and deploy') {
             steps{
-                sh "ssh -i /var/jenkins_home/.ssh/id_svdev ssh root@128.199.246.141 './deploy.sh'"
+                sh "ssh -i /var/jenkins_home/.ssh/id_svdev root@128.199.246.141 './deploy.sh'"
                 // sh 'echo deploy'
             }
             
