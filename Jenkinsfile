@@ -32,14 +32,14 @@ pipeline {
                     echo DOCKER_TAG
                 }
                 sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} . "
-                sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest"
+                sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:lts"
                 sh "docker image ls | grep ${DOCKER_IMAGE}"
                 withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
                     sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
-                    sh "docker push ${DOCKER_IMAGE}:latest"
+                    sh "docker push ${DOCKER_IMAGE}:lts"
                 }
                 sh "docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG}"
-                sh "docker image rm ${DOCKER_IMAGE}:latest"
+                sh "docker image rm ${DOCKER_IMAGE}:lts"
             }
         }
         stage('SSH server and deploy') {
