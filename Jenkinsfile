@@ -22,10 +22,11 @@ pipeline {
             environment {
                 DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
             }
-            script {
-                echo DOCKER_TAG
-            }
+            
             steps {
+                script {
+                    echo DOCKER_TAG
+                }
                 withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
                     sh 'docker build -t hoangsndxqn/express-demo:v1 .'
                     sh 'docker push hoangsndxqn/express-demo:v1'
