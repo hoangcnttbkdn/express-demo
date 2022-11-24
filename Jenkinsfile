@@ -1,23 +1,23 @@
 pipeline {
     agent any
     stages {
-        stage('Clone') {
-            steps {
-                script {
-                    def commit = checkout scm
-                    env.BRANCH_NAME = commit.GIT_BRANCH.replace('origin/', '')
-                    echo env.BRANCH_NAME
-                }
-                // sh 'echo $env.BRANCH_NAME'
-                // sh 'echo $env.BRANCH_NAME'
-                git branch: env.BRANCH_NAME, credentialsId: 'git-hub', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
-            }
-        }
-        // stage('unit test') {
+        // stage('Clone') {
         //     steps {
-        //         sh 'echo runtest'
+        //         script {
+        //             def commit = checkout scm
+        //             env.BRANCH_NAME = commit.GIT_BRANCH.replace('origin/', '')
+        //             echo env.BRANCH_NAME
+        //         }
+        //         // sh 'echo $env.BRANCH_NAME'
+        //         // sh 'echo $env.BRANCH_NAME'
+        //         git branch: env.BRANCH_NAME, credentialsId: 'git-hub', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
         //     }
         // }
+        stage('unit test') {
+            steps {
+                sh 'echo runtest'
+            }
+        }
         stage('Docker build and push') {
             steps {
                 script {
