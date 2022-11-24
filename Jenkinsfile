@@ -13,9 +13,9 @@ pipeline {
         //         git branch: env.BRANCH_NAME, credentialsId: 'git-hub', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
         //     }
         // }
-        stage('unit test') {
+        stage('Test') {
             steps {
-                sh 'echo runtest'
+                sh 'echo test passed'
             }
         }
         stage('Docker build and push') {
