@@ -4,7 +4,7 @@ const port = 3000
 
 app.get('/', (req, res) => {
   var a = 1
-  res.send('Hoang ne')
+  res.send('feature 5 ne ban oi')
 })
 
 app.listen(port, () => {
