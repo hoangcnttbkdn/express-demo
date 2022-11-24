@@ -37,8 +37,7 @@ pipeline {
                     sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
                     sh "docker push ${DOCKER_IMAGE}:latest"
                 }
-                // sh "docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG}"
-                // sh "docker image rm ${DOCKER_IMAGE}:latest"
+                
             }
         }
         stage('SSH server and deploy') {
@@ -49,11 +48,14 @@ pipeline {
         }
     }
     post {
-    success {
-      echo "SUCCESSFUL"
-    }
-    failure {
-      echo "FAILED"
-    }
+        always {
+            sh 'docker rmi $(docker images -a)'
+        }
+        success {
+            echo "SUCCESSFUL"
+        }
+        failure {
+            echo "FAILED"
+        }
   }
 }
