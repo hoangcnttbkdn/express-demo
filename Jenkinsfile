@@ -1,11 +1,17 @@
 pipeline {
     agent any
     stages {
-        // stage('Clone') {
-        //     steps {
-        //         git branch: 'master', credentialsId: 'gittoken', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
-        //     }
-        // }
+        stage('Clone') {
+            steps {
+                script {
+                    def commit = checkout scm
+                    env.BRANCH_NAME = commit.GIT_BRANCH.replace('origin/', '')
+                    echo env.BRANCH_NAME
+                }
+                // sh 'echo $env.BRANCH_NAME'
+                // git branch: 'master', credentialsId: 'gittoken', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
+            }
+        }
         // stage('unit test') {
         //     steps {
         //         sh 'echo runtest'
