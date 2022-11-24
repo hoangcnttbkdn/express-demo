@@ -9,8 +9,8 @@ pipeline {
                     echo env.BRANCH_NAME
                 }
                 // sh 'echo $env.BRANCH_NAME'
-                sh 'echo $env.BRANCH_NAME'
-                git branch: env.BRANCH_NAME, credentialsId: 'gittoken', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
+                // sh 'echo $env.BRANCH_NAME'
+                // git branch: env.BRANCH_NAME, credentialsId: 'gittoken', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
             }
         }
         // stage('unit test') {
@@ -20,6 +20,9 @@ pipeline {
         // }
         stage('Docker build and push') {
             steps {
+                script {
+                    echo env.BRANCH_NAME
+                }
                 withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
                     sh 'docker build -t hoangsndxqn/express-demo:v1 .'
                     sh 'docker push hoangsndxqn/express-demo:v1'
