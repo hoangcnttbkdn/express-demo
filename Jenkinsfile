@@ -1,16 +1,16 @@
 pipeline {
     agent any
     stages {
-        stage('Clone') {
-            steps {
-                git branch: 'master', credentialsId: 'gittoken', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
-            }
-        }
-        stage('unit test') {
-            steps {
-                sh 'echo runtest'
-            }
-        }
+        // stage('Clone') {
+        //     steps {
+        //         git branch: 'master', credentialsId: 'gittoken', url: 'https://github.com/hoangcnttbkdn/express-demo.git'
+        //     }
+        // }
+        // stage('unit test') {
+        //     steps {
+        //         sh 'echo runtest'
+        //     }
+        // }
         stage('Docker build and push') {
             steps {
                 withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
@@ -28,7 +28,8 @@ pipeline {
                 // withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key-totserver', keyFileVariable: 'keyfile')]) {
                 //     sh "ssh root@103.197.184.169 -p 4433 'touch a.txt'"
                 // }
-                sh "ssh -i /var/jenkins_home/.ssh/id_rsa root@103.197.184.169 -p 4433 './deploy.sh'"
+                // sh "ssh -i /var/jenkins_home/.ssh/id_rsa root@103.197.184.169 -p 4433 './deploy.sh'"
+                sh 'echo deploy'
             }
             
         }
