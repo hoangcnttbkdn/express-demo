@@ -22,6 +22,7 @@ pipeline {
             }
         }
         stage('Docker build and push') {
+            agent any
             environment {
                 DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
             }
@@ -37,7 +38,8 @@ pipeline {
                     sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
                     sh "docker push ${DOCKER_IMAGE}:latest"
                 }
-                
+                sh "docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                sh "docker image rm ${DOCKER_IMAGE}:latest"
             }
         }
         stage('SSH server and deploy') {
@@ -49,7 +51,9 @@ pipeline {
     }
     post {
         always {
-            sh 'docker rmi $(docker images -a)'
+            echo "always"
+            // sh "docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG}"
+            // sh "docker image rm ${DOCKER_IMAGE}:latest"
         }
         success {
             echo "SUCCESSFUL"
