@@ -1,6 +1,6 @@
-FROM node:16.18.0
+FROM node:16.18.0-alpine
 
-WORKDIR /JenkinsGithub
+WORKDIR /app
 
 COPY ["package.json", "package-lock.json*", "./"]
 
