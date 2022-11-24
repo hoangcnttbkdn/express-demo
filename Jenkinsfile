@@ -22,7 +22,7 @@ pipeline {
             }
         }
         stage('Docker build and push') {
-            agent any
+            agent { node {label 'master'}}
             environment {
                 DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
             }
@@ -44,7 +44,8 @@ pipeline {
         }
         stage('SSH server and deploy') {
             steps{
-                sh "ssh -i /var/jenkins_home/.ssh/id_svdev root@128.199.246.141 './deploy.sh'"
+                sh 'echo deploy'
+                // sh "ssh -i /var/jenkins_home/.ssh/id_svdev root@128.199.246.141 './deploy.sh'"
             }
             
         }
