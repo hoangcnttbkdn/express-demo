@@ -19,14 +19,15 @@ pipeline {
             }
         }
         stage('Docker build and push') {
+            environment {
+                DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
+                sh 'echo ${DOCKER_TAG}'
+            }
             steps {
-                script {
-                    echo env.BRANCH_NAME
-                }
                 withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
                     sh 'docker build -t hoangsndxqn/express-demo:v1 .'
                     sh 'docker push hoangsndxqn/express-demo:v1'
-                    // sh 'docker image rm hoangsndxqn/express-demo:v1'
+                    sh 'docker image rm hoangsndxqn/express-demo:v1'
                 }   
             }
         }
