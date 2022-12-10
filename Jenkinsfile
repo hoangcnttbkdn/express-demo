@@ -56,15 +56,28 @@ pipeline {
                 sh 'echo DEPLOY_DEV'
                 // sh "ssh -i /var/jenkins_home/.ssh/id_svdev root@128.199.246.141 './deploy.sh'"
             }
+        }
+        stage('Deploy RELEASE') {
+            steps{
+                when {
+                    expression {
+                        return (env.BRANCH_NAME == 'origin/master' | env.BRANCH_NAME == 'master')
+                    }
+                }
+                sh 'echo DEPLOY_DEV'
+                // sh "ssh -i /var/jenkins_home/.ssh/id_svdev root@128.199.246.141 './deploy.sh'"
+            }
             
         }
+
+
     }
     post {
         always {
             echo "always"
             // sh "docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG}"
             // sh "docker image rm ${DOCKER_IMAGE}:latest"
-            
+
         }
         success {
             echo "SUCCESSFUL"
