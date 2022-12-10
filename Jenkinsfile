@@ -46,24 +46,23 @@ pipeline {
             }
         }
         stage('Deploy DEV') {
-            steps{
-                when {
-                    expression {
-                        return (env.BRANCH_NAME == 'origin/dev' | env.BRANCH_NAME == 'dev')
-                    }
+            when {
+                expression {
+                    return (env.BRANCH_NAME == 'origin/dev' | env.BRANCH_NAME == 'dev')
                 }
-
+            }
+            steps{
                 sh 'echo DEPLOY_DEV'
                 // sh "ssh -i /var/jenkins_home/.ssh/id_svdev root@128.199.246.141 './deploy.sh'"
             }
         }
         stage('Deploy RELEASE') {
-            steps{
-                when {
-                    expression {
-                        return (env.BRANCH_NAME == 'origin/master' | env.BRANCH_NAME == 'master')
-                    }
+            when {
+                expression {
+                    return (env.BRANCH_NAME == 'origin/master' | env.BRANCH_NAME == 'master')
                 }
+            }
+            steps{
                 sh 'echo DEPLOY_DEV'
                 // sh "ssh -i /var/jenkins_home/.ssh/id_svdev root@128.199.246.141 './deploy.sh'"
             }
