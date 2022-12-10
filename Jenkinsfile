@@ -56,7 +56,7 @@ pipeline {
                 // sh "ssh -i /var/jenkins_home/.ssh/id_svdev root@128.199.246.141 './deploy.sh'"
             }
         }
-        stage('Deploy RELEASE') {
+        stage('Deploy MASTER') {
             when {
                 expression {
                     return (env.BRANCH_NAME == 'origin/master' | env.BRANCH_NAME == 'master')
@@ -68,7 +68,18 @@ pipeline {
             }
             
         }
-
+        stage('Deploy RELEASE') {
+            when {
+                expression {
+                    return (env.BRANCH_NAME == "refs/tags/${GIT_BRANCH.tokenize('/').pop()}")
+                }
+            }
+            steps{
+                sh 'echo DEPLOY_DEV'
+                // sh "ssh -i /var/jenkins_home/.ssh/id_svdev root@128.199.246.141 './deploy.sh'"
+            }
+            
+        }
 
     }
     post {
