@@ -1,11 +1,19 @@
-FROM node:16.18.0-alpine
+ARG NODE_IMAGE=node:16.19.0-alpine
+ARG APP_PORT=3000
+
+# =====================================
+FROM ${NODE_IMAGE}
 
 WORKDIR /app
 
-COPY ["package.json", "package-lock.json*", "./"]
+COPY package*.json /
 
-COPY ./node_modules ./node_modules
+RUN npm install
 
-COPY ./*.js ./
+COPY . .
 
-CMD [ "node", "index.js" ]
+EXPOSE ${APP_PORT}
+
+CMD ["npm", "start"]
+
+# CMD [ "node", "index.js" ]
