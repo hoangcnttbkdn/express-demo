@@ -41,14 +41,17 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         BRANCH_NAME: $(echo ${{ github.ref }} | sed 's/refs\/heads\///')
-        
-        # IMAGE_TAG: ${{ github.sha }}
+        COMMIT_SHA: ${{ github.sha }}
+        IMAGE_TAG: ${{ steps.build-image.outputs.branch-commit_id }}
       run: |
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
+        # Extract branch name and short commit ID
+        BRANCH_NAME=$(echo ${{ github.ref }} | sed 's/refs\/heads\///')
         SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
         IMAGE_TAG="${BRANCH_NAME}-${SHORT_SHA}"
+        
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
