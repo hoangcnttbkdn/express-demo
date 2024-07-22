@@ -11,6 +11,7 @@ env:
   ECS_CLUSTER: MY_ECS_CLUSTER
   ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION
   CONTAINER_NAME: MY_CONTAINER_NAME
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
 permissions:
   contents: read
@@ -20,7 +21,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: $GITHUB_BASE_REF
+    environment: $BRANCH_NAME
 
     steps:
     - name: Checkout
