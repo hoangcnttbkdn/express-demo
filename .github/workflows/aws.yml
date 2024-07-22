@@ -21,7 +21,8 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: $BRANCH_NAME
+    environment:
+      name: ${{ github.ref_name }}
 
     steps:
     - name: Checkout
