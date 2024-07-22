@@ -49,7 +49,7 @@ jobs:
       id: build-image
       env:
         IMAGE_TAG: ${{ env.IMAGE_TAG }}
-      #   ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       #   BRANCH_NAME: $(echo ${{ github.ref }} | sed 's/refs\/heads\///')
       #   COMMIT_SHA: ${{ github.sha }}
       #   IMAGE_TAG: ${{ steps.build-image.outputs.branch-commit_id }}
