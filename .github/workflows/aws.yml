@@ -28,51 +28,37 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    # - name: Configure AWS credentials
-    #   uses: aws-actions/configure-aws-credentials@v3
-    #   with:
-    #     role-to-assume: ${{ secrets.AWS_GITHUB_ACTION_ROLE }}
-    #     aws-region: ap-northeast-1
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+        role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_ROLE }}
+        aws-region: ${{ vars.AWS_REGION }
         
-    # - name: Login to Amazon ECR
-    #   id: login-ecr
-    #   uses: aws-actions/amazon-ecr-login@v1
-
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+      
+    - name: Extract branch name and set IMAGE_TAG
+      id: set_image_tag
+      run: |
+        BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})
+        IMAGE_TAG=${BRANCH_NAME}-$(echo ${{ github.sha }} | cut -c1-7)
+        echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
+        
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        BRANCH_NAME: $(echo ${{ github.ref }} | sed 's/refs\/heads\///')
-        COMMIT_SHA: ${{ github.sha }}
-        IMAGE_TAG: ${{ steps.build-image.outputs.branch-commit_id }}
-        ABC: ${{ env.ABC }}
+      # env:
+      #   ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #   BRANCH_NAME: $(echo ${{ github.ref }} | sed 's/refs\/heads\///')
+      #   COMMIT_SHA: ${{ github.sha }}
+      #   IMAGE_TAG: ${{ steps.build-image.outputs.branch-commit_id }}
       run: |
-        # Build a docker container and
-        # push it to ECR so that it can
-        # be deployed to ECS.
-        # Extract branch name and short commit ID
-        BRANCH_NAME=$(echo ${{ github.ref }} | sed 's/refs\/heads\///')
-        SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
-        IMAGE_TAG="${BRANCH_NAME}-${SHORT_SHA}"
-        echo $ABC
+        # BRANCH_NAME=$(echo ${{ github.ref }} | sed 's/refs\/heads\///')
+        # SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+        # IMAGE_TAG="${BRANCH_NAME}-${SHORT_SHA}"
+        # echo $ABC
         
-        # docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        # docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        # echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+        # docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }} .
+        # docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}
+        # echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}" >> $GITHUB_OUTPUT
 
-
-    # - name: Fill in the new image ID in the Amazon ECS task definition
-    #   id: task-def
-    #   uses: aws-actions/amazon-ecs-render-task-definition@v1
-    #   with:
-    #     task-definition: ${{ env.ECS_TASK_DEFINITION }}
-    #     container-name: ${{ env.CONTAINER_NAME }}
-    #     image: ${{ steps.build-image.outputs.image }}
-
-    # - name: Deploy Amazon ECS task definition
-    #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-    #   with:
-    #     task-definition: ${{ steps.task-def.outputs.task-definition }}
-    #     service: ${{ env.ECS_SERVICE }}
-    #     cluster: ${{ env.ECS_CLUSTER }}
-    #     wait-for-service-stability: true
