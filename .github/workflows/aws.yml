@@ -45,6 +45,7 @@ jobs:
         BRANCH_NAME: $(echo ${{ github.ref }} | sed 's/refs\/heads\///')
         COMMIT_SHA: ${{ github.sha }}
         IMAGE_TAG: ${{ steps.build-image.outputs.branch-commit_id }}
+        ABC: ${{ env.ABC }}
       run: |
         # Build a docker container and
         # push it to ECR so that it can
@@ -53,7 +54,7 @@ jobs:
         BRANCH_NAME=$(echo ${{ github.ref }} | sed 's/refs\/heads\///')
         SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
         IMAGE_TAG="${BRANCH_NAME}-${SHORT_SHA}"
-        echo ${{ env.ABC }}
+        echo $ABC
         
         # docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         # docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
