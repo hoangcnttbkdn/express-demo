@@ -1,57 +1,125 @@
-name: Deploy to Amazon ECS
+name: Deploy env DEV
 
 on:
   push:
-    branches: [ "dev", "stg" ]
-
-env:
-  AWS_REGION: ap-northeast-1
-  ECR_REPOSITORY: test
-  ECS_SERVICE: MY_ECS_SERVICE
-  ECS_CLUSTER: MY_ECS_CLUSTER
-  ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION
-  CONTAINER_NAME: MY_CONTAINER_NAME
-  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+    branches: [ "dev" ]
 
 permissions:
   contents: read
   id-token: write
 
 jobs:
-  deploy:
-    name: Deploy
+  build:
+    name: Build and push images
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.ref_name }}
+      name: dev
 
     steps:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v3
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.9.0
       with:
-        role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_ROLE }}
-        aws-region: ${{ vars.AWS_REGION }}
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Run command on remote server
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }} 'echo "Hello from GitHub Actions!"'
+
+    # - name: Configure AWS credentials
+    #   uses: aws-actions/configure-aws-credentials@v3
+    #   with:
+    #     role-to-assume: arn:aws:iam::390660170827:role/agc-dev-be-github-actions-role
+    #     aws-region: ap-northeast-1
+
+    # - name: Login to Amazon ECR
+    #   id: login-ecr
+    #   uses: aws-actions/amazon-ecr-login@v1
+
+  #   - name: Extract IMAGE_TAG
+  #     id: set_image_tag
+  #     run: |
+  #       IMAGE_TAG=${{ github.ref_name }}-$(echo ${{ github.sha }} | cut -c1-7)
+  #       echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
+
+  #   - name: Build, tag, and push image to Amazon ECR
+  #     id: build-image
+  #     env:
+  #       ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+  #       IMAGE_TAG: ${{ env.IMAGE_TAG }}
+  #     run: |
+  #       # Build app image
+  #       docker build -t php-app:latest -f deploy/php/Dockerfile .
+  #       docker tag php-app:latest $ECR_REGISTRY/${{ vars.APP_ECR_REPOSITORY }}:$IMAGE_TAG
+  #       # Build nginx image
+  #       docker build -t $ECR_REGISTRY/${{ vars.NGINX_ECR_REPOSITORY }}:$IMAGE_TAG -f deploy/nginx/Dockerfile .
+  #       # Push images
+  #       docker push $ECR_REGISTRY/${{ vars.APP_ECR_REPOSITORY }}:$IMAGE_TAG
+  #       docker push $ECR_REGISTRY/${{ vars.NGINX_ECR_REPOSITORY }}:$IMAGE_TAG
+
+  #   - name: Set SSM Parameter for IMAGE_TAG
+  #     run: |
+  #       aws ssm put-parameter --name "${{ vars.SSM_PARAMETER_PREFIX }}/IMAGE_LATEST_TAG" --value "${{ env.IMAGE_TAG }}" --type String --overwrite --region ${{ vars.AWS_REGION }}
+
+
+
+
+# name: Deploy to Amazon ECS
+
+# on:
+#   push:
+#     branches: [ "dev", "stg" ]
+
+# env:
+#   AWS_REGION: ap-northeast-1
+#   ECR_REPOSITORY: test
+#   ECS_SERVICE: MY_ECS_SERVICE
+#   ECS_CLUSTER: MY_ECS_CLUSTER
+#   ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION
+#   CONTAINER_NAME: MY_CONTAINER_NAME
+#   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+
+# permissions:
+#   contents: read
+#   id-token: write
+
+# jobs:
+#   deploy:
+#     name: Deploy
+#     runs-on: ubuntu-latest
+#     environment:
+#       name: ${{ github.ref_name }}
+
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v4
+
+#     - name: Configure AWS credentials
+#       uses: aws-actions/configure-aws-credentials@v3
+#       with:
+#         role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_ROLE }}
+#         aws-region: ${{ vars.AWS_REGION }}
         
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+#     - name: Login to Amazon ECR
+#       id: login-ecr
+#       uses: aws-actions/amazon-ecr-login@v1
       
-    - name: Extract branch name and set IMAGE_TAG
-      id: set_image_tag
-      run: |
-        # BRANCH_NAME=${{ github.ref_name }}
-        IMAGE_TAG=${{ github.ref_name }}-$(echo ${{ github.sha }} | cut -c1-7)
-        echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
+#     - name: Extract branch name and set IMAGE_TAG
+#       id: set_image_tag
+#       run: |
+#         # BRANCH_NAME=${{ github.ref_name }}
+#         IMAGE_TAG=${{ github.ref_name }}-$(echo ${{ github.sha }} | cut -c1-7)
+#         echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
         
-    - name: Build, tag, and push image to Amazon ECR
-      id: build-image
-      env:
-        IMAGE_TAG: ${{ env.IMAGE_TAG }}
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      run: |
-        docker build -t "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+#     - name: Build, tag, and push image to Amazon ECR
+#       id: build-image
+#       env:
+#         IMAGE_TAG: ${{ env.IMAGE_TAG }}
+#         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#       run: |
+#         docker build -t "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" .
+#         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+#         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
