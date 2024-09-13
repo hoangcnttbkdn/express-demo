@@ -29,7 +29,11 @@ jobs:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Deploy to Server
-      run: ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }} 'ls'
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }} << 'EOF'
+          docker ps
+          docker images
+        EOF
       
     # - name: Create SSH key
     #   run: |
