@@ -26,6 +26,7 @@ jobs:
           touch report_json.json report_md.md report_html.html
           chmod a+w report_json.json report_md.md report_html.html
           docker pull ghcr.io/zaproxy/zaproxy:stable -q
+          chmod -R 777 ./
           docker run -v ./:/zap/wrk/:rw --network=host -e ZAP_AUTH_HEADER -e ZAP_AUTH_HEADER_VALUE -e ZAP_AUTH_HEADER_SITE -t ghcr.io/zaproxy/zaproxy:stable zap-full-scan.py -t https://api.stg.agc.dev.nals.vn/ -J report_json.json -w report_md.md -r report_html.html
         
       - name: Upload zap scan report
