@@ -15,22 +15,22 @@ jobs:
         with:
           ref: master
           
-      # - name: ZAP Scan
-      #   uses: zaproxy/action-full-scan@v0.10.0
-      #   with:
-      #     target: "https://www.example.com/"
-      #     docker_name: 'ghcr.io/zaproxy/zaproxy:stable'
-      
-      - name: ZAP scan
-        run: |
-          touch report_json.json report_md.md report_html.html
-          chmod a+w report_json.json report_md.md report_html.html
-          docker pull ghcr.io/zaproxy/zaproxy:stable -q
-          chmod -R 777 ./
-          docker run -v ./:/zap/wrk/:rw --network=host -e ZAP_AUTH_HEADER -e ZAP_AUTH_HEADER_VALUE -e ZAP_AUTH_HEADER_SITE -t ghcr.io/zaproxy/zaproxy:stable zap-full-scan.py -t https://www.example.com/ -J report_json.json -w report_md.md -r report_html.html
-        
-      - name: Upload zap scan report
-        uses: actions/upload-artifact@v3.2.1-node20
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.10.0
         with:
-          name: Zap scan report
-          path: ./report_html.html
+          target: "https://www.example.com/"
+          docker_name: 'zaproxy/zap-stable'
+      
+      # - name: ZAP scan
+      #   run: |
+      #     touch report_json.json report_md.md report_html.html
+      #     chmod a+w report_json.json report_md.md report_html.html
+      #     docker pull ghcr.io/zaproxy/zaproxy:stable -q
+      #     chmod -R 777 ./
+      #     docker run -v ./:/zap/wrk/:rw --network=host -e ZAP_AUTH_HEADER -e ZAP_AUTH_HEADER_VALUE -e ZAP_AUTH_HEADER_SITE -t ghcr.io/zaproxy/zaproxy:stable zap-full-scan.py -t https://www.example.com/ -J report_json.json -w report_md.md -r report_html.html
+        
+      # - name: Upload zap scan report
+      #   uses: actions/upload-artifact@v3.2.1-node20
+      #   with:
+      #     name: Zap scan report
+      #     path: ./report_html.html
