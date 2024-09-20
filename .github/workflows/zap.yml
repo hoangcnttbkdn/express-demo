@@ -1,9 +1,11 @@
 name: zapfull-security-scan
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Input target'
+        required: true
+        default: 'https://www.example.com'
 
 jobs:
   zap_scan:
@@ -18,7 +20,7 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.10.0
         with:
-          target: "https://agcbe-local.13.112.31.213.nip.io/"
+          target: ${{ github.event.inputs.target }}
           docker_name: 'zaproxy/zap-stable'
       
       # - name: ZAP scan
