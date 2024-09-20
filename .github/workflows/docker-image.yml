@@ -18,7 +18,7 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.10.0
         with:
-          target: "https://www.example.com/"
+          target: "https://agcbe-local.13.112.31.213.nip.io/"
           docker_name: 'zaproxy/zap-stable'
       
       # - name: ZAP scan
