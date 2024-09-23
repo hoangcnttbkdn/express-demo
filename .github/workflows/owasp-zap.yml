@@ -11,17 +11,13 @@ jobs:
   zap_scan:
     runs-on: ubuntu-latest
     name: Scan the webapplication
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: master
-          
+    steps:  
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.10.0
         with:
           target: ${{ github.event.inputs.target }}
           docker_name: 'zaproxy/zap-stable'
+          artifact-name: ${{ github.event.inputs.target }}
       
       # - name: ZAP scan
       #   run: |
