@@ -1,0 +1,32 @@
+name: Deploy to CloudFront
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target deployment environment'
+        required: true
+        type: choice
+        options:
+          - develop
+          - staging
+          - production
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  sync-data-to-s3:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Check ENV
+      id: vars
+      run: |
+        echo ${{ vars.TEST_VAR }}
