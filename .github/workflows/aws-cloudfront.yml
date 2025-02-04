@@ -24,7 +24,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ALLOWED_USER="hoangbvh2"
+          ALLOWED_USER="hoangbvh"
           REPO="${{ github.repository }}"
           ACTOR="${{ github.actor }}"
           
