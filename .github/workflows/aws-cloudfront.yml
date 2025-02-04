@@ -25,7 +25,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ALLOWED_USERS: ${{ vars.ALLOWED_USERS }}
         run: |
-          # ALLOWED_USERS=("trung" "hoangbvh2")
           REPO="${{ github.repository }}"
           ACTOR="${{ github.actor }}"
           
