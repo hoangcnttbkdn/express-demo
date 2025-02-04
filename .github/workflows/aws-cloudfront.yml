@@ -27,19 +27,11 @@ jobs:
         run: |
           REPO="${{ github.repository }}"
           ACTOR="${{ github.actor }}"
-          ENVIRONMENT="${{ github.event.inputs.environment }}"
-  
-          # Chuyển đổi danh sách ALLOWED_USERS từ chuỗi sang mảng
-          IFS=',' read -ra USERS <<< "$ALLOWED_USERS"
-  
-          # Kiểm tra nếu user có quyền admin trong repo
+          ENVIRONMENT="${{ github.event.inputs.environment }}"  
+          IFS=',' read -ra USERS <<< "$ALLOWED_USERS"  
           IS_ADMIN=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/$REPO/collaborators/$ACTOR/permission" | jq -r '.permission')
-  
-          # Điều kiện cho phép chạy:
-          # 1. Nếu ENVIRONMENT là 'develop' và user nằm trong danh sách ALLOWED_USERS
-          # 2. Nếu user có quyền 'admin'
           if [[ "$ENVIRONMENT" == "develop" && " ${USERS[@]} " =~ " ${ACTOR} " ]] || [[ "$IS_ADMIN" == "admin" ]]; then
             echo "✅ User $ACTOR is authorized to run this workflow in $ENVIRONMENT."
           else
@@ -49,7 +41,7 @@ jobs:
           
   sync-data-to-s3:
     needs: validate-user
-    name: Deploy
+    name: Update data
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
 
