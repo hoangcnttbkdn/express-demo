@@ -24,7 +24,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ALLOWED_USER="hoangbvh"
+          ALLOWED_USERS=("hoangbvh" "hoangbvh2")
           REPO="${{ github.repository }}"
           ACTOR="${{ github.actor }}"
           
@@ -33,7 +33,7 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/$REPO/collaborators/$ACTOR/permission" | jq -r '.permission')
 
-          if [[ "$ACTOR" == "$ALLOWED_USER" || "$IS_ADMIN" == "admin" ]]; then
+          if [[ "$ACTOR" == "$ALLOWED_USERS" || "$IS_ADMIN" == "admin" ]]; then
             echo "✅ User $ACTOR is authorized to run this workflow."
           else
             echo "🚫 User $ACTOR is not allowed to run this workflow."
