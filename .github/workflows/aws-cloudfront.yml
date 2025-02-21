@@ -1,4 +1,4 @@
-name: Deploy to CloudFront
+name: Deploy to AWS CloudFront
 
 on:
   workflow_dispatch:
