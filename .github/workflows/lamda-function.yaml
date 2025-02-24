@@ -38,11 +38,33 @@ jobs:
     #     role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_ROLE }}
     #     aws-region: ${{ vars.AWS_REGION }}
 
-    - name: Define function mapping
-      id: create-json
+    - name: Define function name mapping
       uses: jsdaniell/create-json@1.1.2
       with:
         name: "function_mapping.json"
         json: ${{ vars.LAMBDA_FUNCTION_NAME }}
         dir: '.'
         
+    - name: Define function path mapping
+      uses: jsdaniell/create-json@1.1.2
+      with:
+        name: "function_path.json"
+        json: ${{ vars.LAMBDA_FUNCTION_PATH }}
+        dir: '.'
+        
+    - name: Get actual function name
+      id: get_function_name
+      run: |
+        FUNCTION_NAME=$(jq -r '.["${{ github.event.inputs.functions }}"]' function_mapping.json)
+        echo "FUNCTION_NAME=$FUNCTION_NAME" >> $GITHUB_ENV
+        
+    - name: Get actual function name
+      id: get_function_path
+      run: |
+        FUNCTION_PATH=$(jq -r '.["${{ github.event.inputs.functions }}"]' function_path.json)
+        echo "FUNCTION_PATH=$FUNCTION_PATH" >> $GITHUB_ENV
+
+    - name: Check
+      run: |
+        echo $FUNCTION_NAME
+        echo $FUNCTION_PATH
