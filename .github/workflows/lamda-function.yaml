@@ -44,14 +44,12 @@ jobs:
       with:
         name: "function_mapping.json"
         json: ${{ vars.LAMBDA_FUNCTION_NAME }}
-        dir: '.'
         
     - name: Define function path mapping
       uses: jsdaniell/create-json@1.1.2
       with:
         name: "function_path.json"
         json: ${{ vars.LAMBDA_FUNCTION_PATH }}
-        dir: '.'
         
     - name: Get actual function name
       id: get_function_name
