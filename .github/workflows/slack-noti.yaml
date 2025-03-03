@@ -13,5 +13,5 @@ jobs:
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_MESSAGE: '<@HoangBVH> Post Content :rocket:'
+        SLACK_MESSAGE: '<@U07F22U8YAF> Post Content :rocket:'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
