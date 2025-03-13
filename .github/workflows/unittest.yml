@@ -15,5 +15,5 @@ jobs:
         
       - name: Install Liquibase
         run: |
-          curl -s https://download.liquibase.org/install.sh | bash
-          liquibase --version        
+          cat /etc/os-release
+          
