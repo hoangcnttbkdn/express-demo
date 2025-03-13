@@ -31,4 +31,5 @@ jobs:
       - name: Setup Environment
         run: |
           echo "Setup database and env"
-          # docker compose up -d postgres
+          docker compose up -d postgres
+          telnet localhost 5432
