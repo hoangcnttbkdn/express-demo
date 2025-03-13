@@ -27,3 +27,8 @@ jobs:
           sudo apt-get install -y liquibase=4.27.0
           liquibase --version
           python --version
+          
+      - name: Setup Environment
+        run: |
+          echo "Setup database and env"
+          # docker compose up -d postgres
