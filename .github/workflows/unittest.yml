@@ -16,4 +16,4 @@ jobs:
       - name: Install Liquibase
         run: |
           cat /etc/os-release
-          
+          liquibase --version
