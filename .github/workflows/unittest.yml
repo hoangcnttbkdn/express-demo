@@ -13,6 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
+      - name: Setup Python
+        uses: actions/setup-python@v5.4.0
+        with:
+          python-version: '3.11.7'
+          
       - name: Install Liquibase
         run: |
           wget -O- https://repo.liquibase.com/liquibase.asc | gpg --dearmor > liquibase-keyring.gpg
@@ -21,3 +26,4 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y liquibase
           liquibase --version
+          python --version
