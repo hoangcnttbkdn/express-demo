@@ -1,0 +1,19 @@
+name: Liquibase CLI Setup
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  liquibase:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Install Liquibase
+        run: |
+          curl -s https://download.liquibase.org/install.sh | bash
+          liquibase --version        
