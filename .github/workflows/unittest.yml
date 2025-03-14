@@ -34,5 +34,5 @@ jobs:
           touch .env
           docker compose up -d postgres
           telnet localhost 5432
-          pg_isready -h 127.0.0.1 -p 5432 -U postgres
           docker logs express-demo-postgres-1
+          pg_isready -h 127.0.0.1 -p 5432 -U postgres
