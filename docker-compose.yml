@@ -26,8 +26,6 @@ services:
       POSTGRES_PASSWORD: "postgresanyjob"
       POSTGRES_USER: postgres
       POSTGRES_DB: anyjob
-    volumes:
-       - postgres-data-1:/var/lib/postgresql/data
     expose:
         - "5432"
     ports:
@@ -42,5 +40,4 @@ services:
         - "6379:6379"      
 
 volumes:
-  postgres-data-1:
   redis-data:
