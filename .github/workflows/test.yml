@@ -1,0 +1,21 @@
+name: Liquibase CLI Setup
+
+on:
+  push:
+    branches:
+      - master
+env:
+  abc: "toi la Hoang "
+
+jobs:
+  liquibase:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: test
+        run: |
+          echo "${{ vars.TEST }}ABC"
+          echo "$abc"
