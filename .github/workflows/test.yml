@@ -1,6 +1,6 @@
-name: Liquibase CLI Setup
-
+name: Test ABC
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
