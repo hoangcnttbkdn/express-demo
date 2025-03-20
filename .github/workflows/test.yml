@@ -8,7 +8,7 @@ env:
   abc: "toi la Hoang "
 
 jobs:
-  liquibase:
+  test:
     runs-on: ubuntu-latest
 
     steps:
