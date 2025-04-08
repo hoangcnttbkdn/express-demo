@@ -29,37 +29,37 @@ jobs:
       with:
         webhook: ${{ secrets.SLACK_WEBHOOK }}
         webhook-type: webhook-trigger
-        payload: |
-          {
-            "attachments": [
-              {
-                "color": "#36a64f",
-                "pretext": "Build DEVELOP Success. Please verify! :rocket:",
-                "fields": [
-                  {
-                    "title": "Ref",
-                    "value": "${{ github.ref }}",
-                    "short": true
-                  },
-                  {
-                    "title": "Event",
-                    "value": "${{ github.event_name }}",
-                    "short": true
-                  },
-                  {
-                    "title": "Actions URL",
-                    "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Deploy DEV anyjob-frontend>"
-                  },
-                  {
-                    "title": "Commit",
-                    "value": "${{ github.sha }}",
-                    "short": true
-                  },
-                  {
-                    "title": "Message",
-                    "value": "@NgocDNTT \n @LinhNTM \n @TienNQ"
-                  }
-                ]
-              }
-            ]
-          }
+        payload: ${{ vars.SLACK_PAYLOAD }}
+          # {
+          #   "attachments": [
+          #     {
+          #       "color": "#36a64f",
+          #       "pretext": "Build DEVELOP Success. Please verify! :rocket:",
+          #       "fields": [
+          #         {
+          #           "title": "Ref",
+          #           "value": "${{ github.ref }}",
+          #           "short": true
+          #         },
+          #         {
+          #           "title": "Event",
+          #           "value": "${{ github.event_name }}",
+          #           "short": true
+          #         },
+          #         {
+          #           "title": "Actions URL",
+          #           "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Deploy DEV anyjob-frontend>"
+          #         },
+          #         {
+          #           "title": "Commit",
+          #           "value": "${{ github.sha }}",
+          #           "short": true
+          #         },
+          #         {
+          #           "title": "Message",
+          #           "value": "@NgocDNTT \n @LinhNTM \n @TienNQ"
+          #         }
+          #       ]
+          #     }
+          #   ]
+          # }
