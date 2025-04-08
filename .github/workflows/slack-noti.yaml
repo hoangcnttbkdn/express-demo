@@ -60,9 +60,9 @@ jobs:
         # # The authentication value used with the Slack API.
         # token: # optional
         # A location for posting request payloads.
-        webhook: ${{ secrets.SLACK_WEBHOOK }}
-        # Option to use either an incoming webhook or webhook trigger.
-        webhook-type: webhook-trigger
+        # webhook: ${{ secrets.SLACK_WEBHOOK }}
+        # # Option to use either an incoming webhook or webhook trigger.
+        # webhook-type: webhook-trigger
           
               
                 
