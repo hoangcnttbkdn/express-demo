@@ -31,25 +31,34 @@ jobs:
     #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
     #   if: always()          
 
-    - name: slack - GitHub Actions Slack integration
+    - name: Slack Send to Slack
       # You may pin to the exact commit or the version.
-      # uses: act10ns/slack@44541246747a30eb3102d87f7a4cc5471b0ffb7d
-      uses: act10ns/slack@v2.1.0
+      # uses: slackapi/slack-github-action@485a9d42d3a73031f12ec201c457e2162c45d02d
+      uses: slackapi/slack-github-action@v2.0.0
       with:
-        # Specify Slack Incoming Webhook URL
-        webhook-url: ${{ secrets.SLACK_WEBHOOK }}
-        # Configuration file
-        # config: # optional, default is .github/slack.yml
-        # # Specify success, failure, cancelled or a custom status
-        # status: 
-        # # Report on the status of individual steps
-        # steps: # optional
-        # # matrix properties
-        # matrix: # optional
-        # # Override default channel with different channel or username
-        # channel: # optional
-        # # Override message format for step
-        # message: # optional
+        # If the step exits with an error on errors or continues.
+        # errors: # optional, default is false
+        # # The Slack API method to call.
+        # method: # optional
+        # # Attributes that create the content of the request using JSON or YAML.
+        # payload: # optional
+        # # Field seperator for nested attributes in the input payload.
+        # payload-delimiter: # optional
+        # # Path to a file containing a valid input payload made of JSON or YAML.
+        # payload-file-path: # optional
+        # # If templated variables in input payloads should be replaced.
+        # payload-templated: # optional, default is false
+        # # An optional proxied route for HTTPS connections.
+        # proxy: # optional
+        # # The strategy to use when performing retried requests.
+        # retries: # optional, default is 5
+        # # The authentication value used with the Slack API.
+        # token: # optional
+        # A location for posting request payloads.
+        webhook: ${{ secrets.SLACK_WEBHOOK }}
+        # Option to use either an incoming webhook or webhook trigger.
+        # webhook-type: # optional
+          
               
                 
     # - name: Slack Notification
