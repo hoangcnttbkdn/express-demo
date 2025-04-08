@@ -42,6 +42,10 @@ jobs:
         # method: # optional
         # # Attributes that create the content of the request using JSON or YAML.
         # payload: # optional
+        payload: |
+          {
+            "text": ":tada: GitHub Actions workflow *${{ github.workflow }}* succeeded on *${{ github.ref_name }}* by *${{ github.actor }}* :rocket:"
+          }
         # # Field seperator for nested attributes in the input payload.
         # payload-delimiter: # optional
         # # Path to a file containing a valid input payload made of JSON or YAML.
