@@ -30,7 +30,27 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
       if: always()          
-      
+
+    - name: slack_action
+      # You may pin to the exact commit or the version.
+      # uses: megamegax/slack_action@dac54751618fa4934f108b10e2dd3a3a0e4eefa3
+      uses: megamegax/slack_action@0.2.2
+      with:
+        # slack webhook
+        webHook: ${{ secrets.SLACK_WEBHOOK }}
+        # channel
+        # channel: 
+        # # success|failed|canceled
+        job_status: ${{ job.status }}
+        # message
+        message: this message
+        # user name
+        user_name: AutoTest
+        # user icon
+        # user_icon: # optional
+        # # actions
+        # actions: # optional
+                
     # - name: Slack Notification
     #   uses: rtCamp/action-slack-notify@v2
     #   env:
