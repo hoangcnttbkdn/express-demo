@@ -22,30 +22,31 @@ jobs:
     #     status: "${{ vars.SLACK_MENTION_USERS }} Build starting"
     #     color: "warning"
     
-    # - name: Notify Slack
-    #   uses: 8398a7/action-slack@v3
-    #   with:
-    #     status: ${{ job.status }}
-    #     fields: repo,commit,author,ref,workflow,job,pullRequest
-    #   env:
-    #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-    #   if: always()          
-
-    - name: Slack Send to Slack
-      # You may pin to the exact commit or the version.
-      # uses: slackapi/slack-github-action@485a9d42d3a73031f12ec201c457e2162c45d02d
-      uses: slackapi/slack-github-action@v2.0.0
+    - name: Notify Slack
+      uses: 8398a7/action-slack@v3
       with:
-        # If the step exits with an error on errors or continues.
-        # errors: # optional, default is false
-        # # The Slack API method to call.
-        # method: # optional
-        # # Attributes that create the content of the request using JSON or YAML.
-        # payload: # optional
-        payload: |
-          {
-            "text": ":tada: GitHub Actions workflow *${{ github.workflow }}* succeeded on *${{ github.ref_name }}* by *${{ github.actor }}* :rocket:"
-          }
+        status: ${{ job.status }}
+        fields: repo,commit,author,ref,workflow,job,pullRequest
+        mention: '@U07F22U8YAF'
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+      if: always()          
+
+    # - name: Slack Send to Slack
+    #   # You may pin to the exact commit or the version.
+    #   # uses: slackapi/slack-github-action@485a9d42d3a73031f12ec201c457e2162c45d02d
+    #   uses: slackapi/slack-github-action@v2.0.0
+    #   with:
+    #     # If the step exits with an error on errors or continues.
+    #     # errors: # optional, default is false
+    #     # # The Slack API method to call.
+    #     # method: # optional
+    #     # # Attributes that create the content of the request using JSON or YAML.
+    #     # payload: # optional
+    #     payload: |
+    #       {
+    #         "text": ":tada: GitHub Actions workflow *${{ github.workflow }}* succeeded on *${{ github.ref_name }}* by *${{ github.actor }}* :rocket:"
+    #       }
         # # Field seperator for nested attributes in the input payload.
         # payload-delimiter: # optional
         # # Path to a file containing a valid input payload made of JSON or YAML.
