@@ -22,34 +22,35 @@ jobs:
     #     status: "${{ vars.SLACK_MENTION_USERS }} Build starting"
     #     color: "warning"
     
-    - name: Notify Slack
-      uses: 8398a7/action-slack@v3
-      with:
-        status: ${{ job.status }}
-        fields: repo,commit,author,ref,workflow,job,pullRequest
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-      if: always()          
+    # - name: Notify Slack
+    #   uses: 8398a7/action-slack@v3
+    #   with:
+    #     status: ${{ job.status }}
+    #     fields: repo,commit,author,ref,workflow,job,pullRequest
+    #   env:
+    #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+    #   if: always()          
 
-    - name: slack_action
+    - name: slack - GitHub Actions Slack integration
       # You may pin to the exact commit or the version.
-      # uses: megamegax/slack_action@dac54751618fa4934f108b10e2dd3a3a0e4eefa3
-      uses: megamegax/slack_action@0.2.2
+      # uses: act10ns/slack@44541246747a30eb3102d87f7a4cc5471b0ffb7d
+      uses: act10ns/slack@v2.1.0
       with:
-        # slack webhook
-        webHook: ${{ secrets.SLACK_WEBHOOK }}
-        # channel
-        # channel: 
-        # # success|failed|canceled
-        job_status: ${{ job.status }}
-        # # message
-        # message: 'this message'
-        # # user name
-        # user_name: 'AutoTest'
-        # user icon
-        # user_icon: # optional
-        # # actions
-        # actions: # optional
+        # Specify Slack Incoming Webhook URL
+        webhook-url: ${{ secrets.SLACK_WEBHOOK }}
+        # Configuration file
+        # config: # optional, default is .github/slack.yml
+        # # Specify success, failure, cancelled or a custom status
+        # status: 
+        # # Report on the status of individual steps
+        # steps: # optional
+        # # matrix properties
+        # matrix: # optional
+        # # Override default channel with different channel or username
+        # channel: # optional
+        # # Override message format for step
+        # message: # optional
+              
                 
     # - name: Slack Notification
     #   uses: rtCamp/action-slack-notify@v2
