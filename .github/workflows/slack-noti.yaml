@@ -11,25 +11,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    
-    - name: Notify Slack
-      uses: 8398a7/action-slack@v3
+
+    - name: Slack Post
+      # You may pin to the exact commit or the version.
+      # uses: devtk0582/slack-post-action@b9e9a7b9cb8f4cff41f6eacaf7b077f204e8a081
+      uses: devtk0582/slack-post-action@v1.2
       with:
-        status: ${{ job.status }}
-        fields: repo,commit,author,ref,workflow,job,pullRequest
-        mention: '<@U07F22U8YAF>'
-        username: AutoTest
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-      if: always()          
+        # Slack Webhook Url
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        # Message to send
+        MESSAGE: 'this message'
+              
+    # - name: Notify Slack
+    #   uses: 8398a7/action-slack@v3
+    #   with:
+    #     status: ${{ job.status }}
+    #     fields: repo,commit,author,ref,workflow,job,pullRequest
+    #     mention: '<@U07F22U8YAF>'
+    #     username: AutoTest
+    #   env:
+    #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+    #   if: always()          
     
-    - name: Custom Slack Notification
-      if: success()
-      uses: slackapi/slack-github-action@v2.0.0
-      with:
-        webhook: ${{ secrets.SLACK_WEBHOOK }}
-        webhook-type: webhook-trigger
-        payload: ${{ vars.SLACK_PAYLOAD }}
+    # - name: Custom Slack Notification
+    #   if: success()
+    #   uses: slackapi/slack-github-action@v2.0.0
+    #   with:
+    #     webhook: ${{ secrets.SLACK_WEBHOOK }}
+    #     webhook-type: webhook-trigger
+    #     payload: ${{ vars.SLACK_PAYLOAD }}
           # {
           #   "attachments": [
           #     {
