@@ -42,10 +42,10 @@ jobs:
         # channel: 
         # # success|failed|canceled
         job_status: ${{ job.status }}
-        # message
-        message: 'this message'
-        # user name
-        user_name: 'AutoTest'
+        # # message
+        # message: 'this message'
+        # # user name
+        # user_name: 'AutoTest'
         # user icon
         # user_icon: # optional
         # # actions
