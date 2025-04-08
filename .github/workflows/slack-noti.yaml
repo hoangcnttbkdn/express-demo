@@ -11,16 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-
-    # - name: Notify Slack - Deployment Starting
-    #   if: success()
-    #   env:
-    #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_API_WEBHOOK_TOKEN }}
-    #   uses: Discontract/github-action-slack-notify-deployment@v1
-    #   with:
-    #     channel_id: ${{ secrets.SLACK_API_CHANNEL_ID }}
-    #     status: "${{ vars.SLACK_MENTION_USERS }} Build starting"
-    #     color: "warning"
     
     - name: Notify Slack
       uses: 8398a7/action-slack@v3
@@ -32,59 +22,44 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
       if: always()          
-
-    # - name: Slack Send to Slack
-    #   # You may pin to the exact commit or the version.
-    #   # uses: slackapi/slack-github-action@485a9d42d3a73031f12ec201c457e2162c45d02d
-    #   uses: slackapi/slack-github-action@v2.0.0
-    #   with:
-    #     # If the step exits with an error on errors or continues.
-    #     # errors: # optional, default is false
-    #     # # The Slack API method to call.
-    #     # method: # optional
-    #     # # Attributes that create the content of the request using JSON or YAML.
-    #     # payload: # optional
-    #     payload: |
-    #       {
-    #         "text": ":tada: GitHub Actions workflow *${{ github.workflow }}* succeeded on *${{ github.ref_name }}* by *${{ github.actor }}* :rocket:"
-    #       }
-        # # Field seperator for nested attributes in the input payload.
-        # payload-delimiter: # optional
-        # # Path to a file containing a valid input payload made of JSON or YAML.
-        # payload-file-path: # optional
-        # # If templated variables in input payloads should be replaced.
-        # payload-templated: # optional, default is false
-        # # An optional proxied route for HTTPS connections.
-        # proxy: # optional
-        # # The strategy to use when performing retried requests.
-        # retries: # optional, default is 5
-        # # The authentication value used with the Slack API.
-        # token: # optional
-        # A location for posting request payloads.
-        # webhook: ${{ secrets.SLACK_WEBHOOK }}
-        # # Option to use either an incoming webhook or webhook trigger.
-        # webhook-type: webhook-trigger
-          
-              
-                
-    # - name: Slack Notification
-    #   uses: rtCamp/action-slack-notify@v2
-    #   env:
-    #     SLACK_COLOR: 'success'
-    #     SLACK_MESSAGE: '${{ vars.SLACK_MENTION_USERS }} On success :rocket:'
-    #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
-    # - name: Slack Notification
-    #   uses: rtCamp/action-slack-notify@v2
-    #   env:
-    #     SLACK_COLOR: 'warning'
-    #     SLACK_MESSAGE: '${{ vars.SLACK_MENTION_USERS }} Warning :rocket:'
-    #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        
-    # - name: Slack Notification
-    #   uses: rtCamp/action-slack-notify@v2
-    #   env:
-    #     SLACK_COLOR: 'failure'
-    #     SLACK_MESSAGE: '${{ vars.SLACK_MENTION_USERS }} On failure :rocket:'
-    #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }} 
-      
+    
+    - name: Custom Slack Notification
+      if: success()
+      uses: slackapi/slack-github-action@v2.0.0
+      with:
+        webhook: ${{ secrets.SLACK_WEBHOOK }}
+        webhook-type: webhook-trigger
+        payload: |
+          {
+            "attachments": [
+              {
+                "color": "#36a64f",
+                "pretext": "Build DEVELOP Success. Please verify! :rocket:",
+                "fields": [
+                  {
+                    "title": "Ref",
+                    "value": "${{ github.ref }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Event",
+                    "value": "${{ github.event_name }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Actions URL",
+                    "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Deploy DEV anyjob-frontend>"
+                  },
+                  {
+                    "title": "Commit",
+                    "value": "${{ github.sha }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Message",
+                    "value": "@NgocDNTT \n @LinhNTM \n @TienNQ"
+                  }
+                ]
+              }
+            ]
+          }
