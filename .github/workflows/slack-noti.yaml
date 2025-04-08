@@ -27,7 +27,8 @@ jobs:
       with:
         status: ${{ job.status }}
         fields: repo,commit,author,ref,workflow,job,pullRequest
-        mention: '@U07F22U8YAF'
+        mention: '<@U07F22U8YAF>'
+        username: AutoTest
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
       if: always()          
