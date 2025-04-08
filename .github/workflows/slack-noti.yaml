@@ -57,7 +57,7 @@ jobs:
         # A location for posting request payloads.
         webhook: ${{ secrets.SLACK_WEBHOOK }}
         # Option to use either an incoming webhook or webhook trigger.
-        # webhook-type: # optional
+        webhook-type: webhook-trigger
           
               
                 
