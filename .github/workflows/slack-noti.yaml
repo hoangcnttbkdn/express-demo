@@ -1,26 +1,41 @@
-on:
-  push:
-    branches:
-      - master
-  workflow_dispatch:
-      
 name: Slack Notification Demo
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target Environment'
+        required: true
+        type: choice
+        options:
+          - develop
+          - testing
+          - staging
+          - production
+
 jobs:
   slackNotification:
     name: Slack Notification
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+      - name: Notify slack starting
+        if: success()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_COLOR: 'warning'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: 'Build ${{ github.event.inputs.environment }} Starting'
+    # - uses: actions/checkout@v4
 
-    - name: Slack Post
-      # You may pin to the exact commit or the version.
-      # uses: devtk0582/slack-post-action@b9e9a7b9cb8f4cff41f6eacaf7b077f204e8a081
-      uses: devtk0582/slack-post-action@v1.2
-      with:
-        # Slack Webhook Url
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        # Message to send
-        MESSAGE: 'this message'
+    # - name: Slack Post
+    #   # You may pin to the exact commit or the version.
+    #   # uses: devtk0582/slack-post-action@b9e9a7b9cb8f4cff41f6eacaf7b077f204e8a081
+    #   uses: devtk0582/slack-post-action@v1.2
+    #   with:
+    #     # Slack Webhook Url
+    #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+    #     # Message to send
+    #     MESSAGE: 'this message'
               
     # - name: Notify Slack
     #   uses: 8398a7/action-slack@v3
