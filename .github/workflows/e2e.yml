@@ -21,7 +21,7 @@ on:
           - Sanity/PaymentSetting
           - Sanity/AttendanceDetails
   schedule:
-    - cron: '3 4 * * 5' # 16h Thứ Ba hàng tuần (UTC+7 = 9h UTC)
+    - cron: '5 4 * * *'
 jobs:
   test:
     timeout-minutes: 60
