@@ -1,7 +1,8 @@
 name: Playwright Tests
 on:
   schedule:
-    - cron: '15 4 * * *'
+    - cron: '30 4 * * *'
+    - cron: '18 11 * * *'
   workflow_dispatch:
     inputs:
       environment:
