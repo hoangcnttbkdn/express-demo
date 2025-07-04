@@ -1,5 +1,7 @@
 name: Playwright Tests
 on:
+  schedule:
+    - cron: '15 4 * * *'
   workflow_dispatch:
     inputs:
       environment:
@@ -20,8 +22,7 @@ on:
           - Sanity/Sukima
           - Sanity/PaymentSetting
           - Sanity/AttendanceDetails
-  schedule:
-    - cron: '10 4 * * *'
+
 jobs:
   test:
     timeout-minutes: 60
