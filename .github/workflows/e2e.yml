@@ -21,7 +21,7 @@ on:
           - Sanity/PaymentSetting
           - Sanity/AttendanceDetails
   schedule:
-    - cron: '0 4 * * 5' # 16h Thứ Ba hàng tuần (UTC+7 = 9h UTC)
+    - cron: '3 4 * * 5' # 16h Thứ Ba hàng tuần (UTC+7 = 9h UTC)
 jobs:
   test:
     timeout-minutes: 60
@@ -29,5 +29,5 @@ jobs:
     steps:
       - name: Check
         run: |
-          echo ${{ github.event.inputs.environment || STAGING }}
-          echo ${{ github.event.inputs.testSuite || Sanity/Sukima }}
+          echo ${{ github.event.inputs.environment || 'STAGING' }}
+          echo ${{ github.event.inputs.testSuite || 'Sanity/Sukima' }}
