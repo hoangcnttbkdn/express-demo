@@ -21,13 +21,17 @@ on:
           - Sanity/PaymentSetting
           - Sanity/AttendanceDetails
   schedule:
-    - cron: '5 4 * * *'
+    - cron: '10 4 * * *'
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      ENVIRONMENT: ${{ github.event.inputs.environment || 'STAGING' }}
+      TEST_SUITE: ${{ github.event.inputs.testSuite || 'Sanity/Sukima' }}
+
     steps:
       - name: Check
         run: |
-          echo ${{ github.event.inputs.environment || 'STAGING' }}
-          echo ${{ github.event.inputs.testSuite || 'Sanity/Sukima' }}
+          echo "Environment: $ENVIRONMENT"
+          echo "Test Suite: $TEST_SUITE"
