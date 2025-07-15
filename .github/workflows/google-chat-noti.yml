@@ -10,12 +10,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      - id: 'notify google chat'
-        if: ${{ inputs.fail_intentionally }}
-        uses: 'google-github-actions/send-google-chat-webhook@v0.0.2'
+      - name: Google Chat Notification
+        uses: Co-qn/google-chat-notification@releases/v1
         with:
-          webhook_url: '${{ secrets.GOOGLE_CHAT_WEBHOOK }}'
-          mention: "<all>"
+          name: Build
+          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          status: ${{ job.status }}
+        if: always()
+
       # - name: Notify Google Chat
       #   if: ${{ always() }} # Use always to ensure that the notification is also send on failure of former steps
       #   uses: SimonScholz/google-chat-action@main
