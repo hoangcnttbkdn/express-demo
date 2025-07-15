@@ -2,9 +2,6 @@ name: Google Chat Notify
 on:
   workflow_dispatch:
 
-env:
-  abc: "toi la Hoang "
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -13,8 +10,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      - name: test
-        run: |
-          echo "${{ vars.TEST }}ABC"
-          echo "$abc"
-          date
+      - name: Notify Google Chat
+        if: ${{ always() }} # Use always to ensure that the notification is also send on failure of former steps
+        uses: SimonScholz/google-chat-action@main
+        with:
+          webhookUrl: '${{ secrets.GOOGLE_CHAT_WEBHOOK }}'
