@@ -1,4 +1,4 @@
-name: Test ABC
+name: Google Chat Notify
 on:
   workflow_dispatch:
 
