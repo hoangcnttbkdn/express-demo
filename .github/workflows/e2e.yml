@@ -1,39 +1,39 @@
-name: Playwright Tests
-on:
-  schedule:
-    - cron: '30 4 * * *'
-    - cron: '18 11 * * *'
-  # workflow_dispatch:
-  #   inputs:
-  #     environment:
-  #       description: 'Target environment'
-  #       required: true
-  #       type: choice
-  #       options:
-  #         - DEV
-  #         - TEST
-  #         - STAGING
-  #         - FEATURE
-  #     testSuite:
-  #       description: 'Test suite folder to run (e.g. sanity, sukima, payment, attendanceDetails)'
-  #       required: true
-  #       type: choice
-  #       options:
-  #         - Sanity
-  #         - Sanity/Sukima
-  #         - Sanity/PaymentSetting
-  #         - Sanity/AttendanceDetails
+# name: Playwright Tests
+# on:
+#   schedule:
+#     - cron: '30 4 * * *'
+#     - cron: '18 11 * * *'
+#   # workflow_dispatch:
+#   #   inputs:
+#   #     environment:
+#   #       description: 'Target environment'
+#   #       required: true
+#   #       type: choice
+#   #       options:
+#   #         - DEV
+#   #         - TEST
+#   #         - STAGING
+#   #         - FEATURE
+#   #     testSuite:
+#   #       description: 'Test suite folder to run (e.g. sanity, sukima, payment, attendanceDetails)'
+#   #       required: true
+#   #       type: choice
+#   #       options:
+#   #         - Sanity
+#   #         - Sanity/Sukima
+#   #         - Sanity/PaymentSetting
+#   #         - Sanity/AttendanceDetails
 
-jobs:
-  test:
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    env:
-      ENVIRONMENT: ${{ github.event.inputs.environment || 'STAGING' }}
-      TEST_SUITE: ${{ github.event.inputs.testSuite || 'Sanity/Sukima' }}
+# jobs:
+#   test:
+#     timeout-minutes: 60
+#     runs-on: ubuntu-latest
+#     env:
+#       ENVIRONMENT: ${{ github.event.inputs.environment || 'STAGING' }}
+#       TEST_SUITE: ${{ github.event.inputs.testSuite || 'Sanity/Sukima' }}
 
-    steps:
-      - name: Check
-        run: |
-          echo "Environment: $ENVIRONMENT"
-          echo "Test Suite: $TEST_SUITE"
+#     steps:
+#       - name: Check
+#         run: |
+#           echo "Environment: $ENVIRONMENT"
+#           echo "Test Suite: $TEST_SUITE"
