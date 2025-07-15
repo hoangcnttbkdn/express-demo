@@ -10,10 +10,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
+      - name: google-chat-notifier
+        uses: javiern8410/actions-google-chat-notification@v1.0.0
+        with:
+          name: Build on DEV
+          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          status: ${{ job.status }}
+          custom_text: 'Test custom message.'
+        if: always()
+  
       - name: Google Chat Notification
         uses: Co-qn/google-chat-notification@releases/v1
         with:
-          name: Build
+          name: Build for Develop
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
           status: ${{ job.status }}
         if: always()
