@@ -19,22 +19,22 @@ jobs:
           custom_text: 'Test custom message.'
         if: always()
 
-      - name: google-chat-notifier
-        uses: javiern8410/actions-google-chat-notification@v1.0.0
-        with:
-          name: Build on DEV
-          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          status: warning
-          custom_text: 'Test warning message.'
-        if: always()
+      # - name: google-chat-notifier
+      #   uses: javiern8410/actions-google-chat-notification@v1.0.0
+      #   with:
+      #     name: Build on DEV
+      #     url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+      #     status: warning
+      #     custom_text: 'Test warning message.'
+      #   if: always()
         
       - name: google-chat-notifier
         uses: javiern8410/actions-google-chat-notification@v1.0.0
         with:
           name: Build on DEV
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          status: failed
-          custom_text: 'Test failed message.'
+          status: failure
+          custom_text: 'Test failure message.'
         if: always()
       # - name: Google Chat Notification
       #   uses: Co-qn/google-chat-notification@releases/v1
