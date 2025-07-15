@@ -18,14 +18,31 @@ jobs:
           status: ${{ job.status }}
           custom_text: 'Test custom message.'
         if: always()
-  
-      - name: Google Chat Notification
-        uses: Co-qn/google-chat-notification@releases/v1
+
+      - name: google-chat-notifier
+        uses: javiern8410/actions-google-chat-notification@v1.0.0
         with:
-          name: Build for Develop
+          name: Build on DEV
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          status: ${{ job.status }}
+          status: warning
+          custom_text: 'Test warning message.'
         if: always()
+        
+      - name: google-chat-notifier
+        uses: javiern8410/actions-google-chat-notification@v1.0.0
+        with:
+          name: Build on DEV
+          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          status: failed
+          custom_text: 'Test failed message.'
+        if: always()
+      # - name: Google Chat Notification
+      #   uses: Co-qn/google-chat-notification@releases/v1
+      #   with:
+      #     name: Build for Develop
+      #     url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+      #     status: ${{ job.status }}
+      #   if: always()
 
       # - name: Notify Google Chat
       #   if: ${{ always() }} # Use always to ensure that the notification is also send on failure of former steps
