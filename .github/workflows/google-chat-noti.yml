@@ -15,66 +15,20 @@ jobs:
           name: Build DEV
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
           status: in-progress
-          custom_text: 'Test custom message.'
-        # if: always()
-      # - name: Send Notification
-      #   uses: adprajwal/ChimeOps@v1
-      #   # if: always()
-      #   with:
-      #     name: "Build Status"
-      #     url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-      #     status: in-progress        
-      # - name: Send Google Chat notification
-      #   uses: w00khyung/google-chat-webhook-action@v1
-      #   with:
-      #     webhook_url: ${{ secrets.GOOGLE_CHAT_WEBHOOK_URL }}
-      #     title: 'Deployment Started: ${{ github.repository }}'     
+          custom_text: 'Test start message.'
           
-      # - name: Notify job start
-      #   uses: javiern8410/actions-google-chat-notification@v1.0.0
-      #   with:
-      #     name: Start Build on DEV
-      #     url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-      #     status: started
-      #     custom_text: '🚀 Job started...'
+      - name: google-chat-notification
+        uses: hoangbvh/actions-google-chat-notification@v1.0.0
+        with:
+          name: Build DEV 
+          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          status: failure
+          custom_text: 'Test fail message.'
           
-      # - name: google-chat-notifier
-      #   uses: javiern8410/actions-google-chat-notification@v1.0.0
-      #   with:
-      #     name: Build on DEV
-      #     url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-      #     status: ${{ job.status }}
-      #     custom_text: 'Test custom message.'
-      #   if: always()
-
-      # - name: google-chat-notifier
-      #   uses: javiern8410/actions-google-chat-notification@v1.0.0
-      #   with:
-      #     name: Build on DEV
-      #     url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-      #     status: warning
-      #     custom_text: 'Test warning message.'
-      #   if: always()
-        
-      # - name: google-chat-notifier
-      #   uses: javiern8410/actions-google-chat-notification@v1.0.0
-      #   with:
-      #     name: Build on DEV
-      #     url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-      #     status: failure
-      #     custom_text: 'Test failure message.'
-      #   if: always()
-        
-      # - name: Google Chat Notification
-      #   uses: Co-qn/google-chat-notification@releases/v1
-      #   with:
-      #     name: Build for Develop
-      #     url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-      #     status: ${{ job.status }}
-      #   if: always()
-
-      # - name: Notify Google Chat
-      #   if: ${{ always() }} # Use always to ensure that the notification is also send on failure of former steps
-      #   uses: SimonScholz/google-chat-action@main
-      #   with:
-      #     webhookUrl: '${{ secrets.GOOGLE_CHAT_WEBHOOK }}'
+      - name: google-chat-notification
+        uses: hoangbvh/actions-google-chat-notification@v1.0.0
+        with:
+          name: Build DEV
+          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          status: ${{ job.status }}
+          custom_text: 'Test success message.'
