@@ -9,12 +9,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
-      - name: Send Google Chat notification
-        uses: w00khyung/google-chat-webhook-action@v1
+      - name: Send Notification
+        uses: adprajwal/ChimeOps@v1
+        if: always()
         with:
-          webhook_url: ${{ secrets.GOOGLE_CHAT_WEBHOOK_URL }}
-          title: 'Deployment Started: ${{ github.repository }}'     
+          name: "Build Status"
+          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          status: ${{ job.status }}        
+      # - name: Send Google Chat notification
+      #   uses: w00khyung/google-chat-webhook-action@v1
+      #   with:
+      #     webhook_url: ${{ secrets.GOOGLE_CHAT_WEBHOOK_URL }}
+      #     title: 'Deployment Started: ${{ github.repository }}'     
           
       # - name: Notify job start
       #   uses: javiern8410/actions-google-chat-notification@v1.0.0
@@ -42,14 +48,15 @@ jobs:
       #     custom_text: 'Test warning message.'
       #   if: always()
         
-      - name: google-chat-notifier
-        uses: javiern8410/actions-google-chat-notification@v1.0.0
-        with:
-          name: Build on DEV
-          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          status: failure
-          custom_text: 'Test failure message.'
-        if: always()
+      # - name: google-chat-notifier
+      #   uses: javiern8410/actions-google-chat-notification@v1.0.0
+      #   with:
+      #     name: Build on DEV
+      #     url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+      #     status: failure
+      #     custom_text: 'Test failure message.'
+      #   if: always()
+        
       # - name: Google Chat Notification
       #   uses: Co-qn/google-chat-notification@releases/v1
       #   with:
