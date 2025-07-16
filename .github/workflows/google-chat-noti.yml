@@ -10,22 +10,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      - name: Notify job start
-        uses: javiern8410/actions-google-chat-notification@v1.0.0
+      - name: Send Google Chat notification
+        uses: w00khyung/google-chat-webhook-action@v1
         with:
-          name: Start Build on DEV
-          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          status: started
-          custom_text: '🚀 Job started...'
+          webhook_url: ${{ secrets.GOOGLE_CHAT_WEBHOOK_URL }}
+          title: 'Deployment Started: ${{ github.repository }}'     
           
-      - name: google-chat-notifier
-        uses: javiern8410/actions-google-chat-notification@v1.0.0
-        with:
-          name: Build on DEV
-          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          status: ${{ job.status }}
-          custom_text: 'Test custom message.'
-        if: always()
+      # - name: Notify job start
+      #   uses: javiern8410/actions-google-chat-notification@v1.0.0
+      #   with:
+      #     name: Start Build on DEV
+      #     url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+      #     status: started
+      #     custom_text: '🚀 Job started...'
+          
+      # - name: google-chat-notifier
+      #   uses: javiern8410/actions-google-chat-notification@v1.0.0
+      #   with:
+      #     name: Build on DEV
+      #     url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+      #     status: ${{ job.status }}
+      #     custom_text: 'Test custom message.'
+      #   if: always()
 
       # - name: google-chat-notifier
       #   uses: javiern8410/actions-google-chat-notification@v1.0.0
