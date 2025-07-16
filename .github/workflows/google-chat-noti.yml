@@ -9,13 +9,21 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Send Notification
-        uses: adprajwal/ChimeOps@v1
-        # if: always()
+      - name: google-chat-notification
+        uses: hoangbvh/actions-google-chat-notification@v1.0.0
         with:
-          name: "Build Status"
+          name: Build DEV
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          status: in-progress        
+          status: in-progress
+          custom_text: 'Test custom message.'
+        # if: always()
+      # - name: Send Notification
+      #   uses: adprajwal/ChimeOps@v1
+      #   # if: always()
+      #   with:
+      #     name: "Build Status"
+      #     url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+      #     status: in-progress        
       # - name: Send Google Chat notification
       #   uses: w00khyung/google-chat-webhook-action@v1
       #   with:
