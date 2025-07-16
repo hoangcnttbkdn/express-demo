@@ -1,7 +1,16 @@
 name: Google Chat Notify
 on:
   workflow_dispatch:
-
+    inputs:
+      environment:
+        description: 'Target Environment'
+        required: true
+        type: choice
+        options:
+          - develop
+          - staging
+          - production
+          
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -12,7 +21,7 @@ jobs:
       - name: Notify build start
         uses: hoangbvh/actions-google-chat-notification@v1.0.0
         with:
-          name: "[DEV] Build GC-Admin-Service:"
+          name: "[${{ github.event.inputs.environment }}] Build GC-Admin-Service:"
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
           status: in-progress
           # custom_text: 'Test start message.'
@@ -20,7 +29,7 @@ jobs:
       - name: google-chat-notification
         uses: hoangbvh/actions-google-chat-notification@v1.0.0
         with:
-          name: Build DEV 
+          name: "[${{ github.event.inputs.environment }}] Build DEV:"
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
           status: failure
           custom_text: 'Test fail message.'
