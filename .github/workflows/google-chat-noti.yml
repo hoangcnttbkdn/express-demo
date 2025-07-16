@@ -9,10 +9,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: google-chat-notification
+      - name: Notify build start
         uses: hoangbvh/actions-google-chat-notification@v1.0.0
         with:
-          name: Build DEV
+          name: "[DEV] Build GC-Admin-Service:"
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
           status: in-progress
           # custom_text: 'Test start message.'
