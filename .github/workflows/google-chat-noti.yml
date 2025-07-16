@@ -15,7 +15,7 @@ jobs:
           name: Build DEV
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
           status: in-progress
-          custom_text: 'Test start message.'
+          # custom_text: 'Test start message.'
           
       - name: google-chat-notification
         uses: hoangbvh/actions-google-chat-notification@v1.0.0
