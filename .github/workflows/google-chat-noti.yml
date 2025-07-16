@@ -11,11 +11,11 @@ jobs:
         uses: actions/checkout@v4
       - name: Send Notification
         uses: adprajwal/ChimeOps@v1
-        if: always()
+        # if: always()
         with:
           name: "Build Status"
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          status: ${{ job.status }}        
+          status: in-progress        
       # - name: Send Google Chat notification
       #   uses: w00khyung/google-chat-webhook-action@v1
       #   with:
