@@ -19,7 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Notify build start
-        uses: hoangbvh/actions-google-chat-notification@v1.0.0
+        uses: hoangbvh/actions-google-chat-notification@v1.1.0
         with:
           name: "[${{ github.event.inputs.environment }}] Build GC-Admin-Service:"
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
@@ -27,7 +27,7 @@ jobs:
           # custom_text: 'Test message.'
           
       - name: google-chat-notification
-        uses: hoangbvh/actions-google-chat-notification@v1.0.0
+        uses: hoangbvh/actions-google-chat-notification@v1.1.0
         with:
           name: "[${{ github.event.inputs.environment }}] Build DEV:"
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
@@ -35,7 +35,7 @@ jobs:
           custom_text: 'Test fail message'
           
       # - name: google-chat-notification
-      #   uses: hoangbvh/actions-google-chat-notification@v1.0.0
+      #   uses: hoangbvh/actions-google-chat-notification@v1.1.0
       #   with:
       #     name: Build DEV
       #     url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
