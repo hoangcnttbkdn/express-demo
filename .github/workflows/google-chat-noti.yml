@@ -32,7 +32,7 @@ jobs:
           name: "[${{ github.event.inputs.environment }}] Build DEV:"
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
           status: failure
-          custom_text: 'Test fail message.'
+          custom_text: 'Test fail message :rocket:'
           
       - name: google-chat-notification
         uses: hoangbvh/actions-google-chat-notification@v1.0.0
