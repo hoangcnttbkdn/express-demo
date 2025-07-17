@@ -23,8 +23,8 @@ jobs:
         with:
           name: "[${{ github.event.inputs.environment }}] Build GC-Admin-Service:"
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          status: in-progress
-          # custom_text: 'Test start message.'
+          status: passed
+          # custom_text: 'Test message.'
           
       - name: google-chat-notification
         uses: hoangbvh/actions-google-chat-notification@v1.0.0
@@ -32,12 +32,12 @@ jobs:
           name: "[${{ github.event.inputs.environment }}] Build DEV:"
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
           status: failure
-          custom_text: 'Test fail message :rocket:'
+          custom_text: 'Test fail message'
           
-      - name: google-chat-notification
-        uses: hoangbvh/actions-google-chat-notification@v1.0.0
-        with:
-          name: Build DEV
-          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          status: ${{ job.status }}
-          custom_text: 'Test success message.'
+      # - name: google-chat-notification
+      #   uses: hoangbvh/actions-google-chat-notification@v1.0.0
+      #   with:
+      #     name: Build DEV
+      #     url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+      #     status: ${{ job.status }}
+      #     custom_text: 'Test success message.'
